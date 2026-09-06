@@ -124,21 +124,56 @@
 
 ---
 
-## 5. Reporting Deliverables & Diagnostic Artifacts
+## 5. Reporting Deliverables & Allure Dashboard Architecture
 
-### 5.1 Interactive Allure Report
-- **Location:** `reports/allure-results/`
-- **Serve Command:**
-  ```powershell
-  allure serve reports/allure-results
-  ```
-- **Features:** Grouping by Epic/Feature/Story, step timestamps, attached failure screenshots, Playwright trace zip archives, and session WebM video recordings.
+### 5.1 Allure HTML Report Dashboard (`reports/allure-report/index.html`)
 
-### 5.2 Standalone Pytest HTML Report
-- **Location:** `reports/report.html` (self-contained with embedded styling).
+The framework generates a complete **Allure 2.29.0 HTML Report Dashboard** with interactive views:
 
-### 5.3 Diagnostic Failure Artifact Locations
-- **Screenshots:** `reports/screenshots/` (full-page capture on failure)
-- **Playwright Traces:** `reports/traces/` (`.zip` timeline and DOM snapshots)
-- **Video Recordings:** `reports/videos/` (`.webm` session recordings)
+```
+reports/
+├── allure-report/                 # Standalone Generated HTML Report
+│   ├── index.html                 # Main Dashboard Entrypoint
+│   ├── data/                      # Test execution JSON data & statistics
+│   ├── widgets/                   # Summary widgets, status charts & graphs
+│   └── plugin/                    # Behaviors, packages, screen-diff plugins
+├── allure-results/                # Raw pytest test run artifacts & attachments
+├── screenshots/                   # Full-page failure PNG screenshots
+├── traces/                        # Playwright trace zip archives
+├── videos/                        # WebM session recordings
+└── report.html                    # Single-file Pytest HTML report
+```
+
+### 5.2 Allure Dashboard Views Breakdown
+
+| View Tab | Purpose & Features |
+| :--- | :--- |
+| **📊 Overview** | Executive summary dashboard showing pass/fail ratios, duration distribution, environment parameters, and test categories. |
+| **🎭 Behaviors** | BDD hierarchy grouped by **Epic** (`Proton Mail Core`), **Feature** (`Authentication`, `Email Composition`, `Drafts`, `Starred`, `Search`, `E2E`), and **Story**. |
+| **📑 Suites** | Classical suite breakdown organized by test files (`test_login.py`, `test_compose.py`, `test_e2e.py`, etc.). |
+| **📈 Graphs** | Visual charts depicting test status distribution, severity trends (Blocker, Critical, Normal), and execution timeline durations. |
+| **⏱️ Timeline** | Parallel and serial test execution breakdown across worker threads. |
+| **📦 Packages** | Test distribution mapped to Python module packages. |
+
+---
+
+### 5.3 Automated Failure Evidence Attached in Allure
+
+When any test encounters a failure or timeout, the framework captures and embeds three distinct diagnostic artifacts directly into the test's Allure view:
+
+1. 📸 **Full-Page Screenshot (`.png`):** Attached as `allure.attachment_type.PNG` for immediate visual inspection.
+2. 🔍 **Playwright Trace Archive (`.zip`):** Attached as `application/zip` containing the full DOM snapshot timeline, action log, and network request waterfall.
+3. 🎥 **Session Video (`.webm`):** Attached as `allure.attachment_type.WEBM` showing the live browser interaction leading up to failure.
+
+---
+
+### 5.4 One-Click Scripts & Viewing Commands
+
+| Action | One-Click Batch Script | CLI Command |
+| :--- | :--- | :--- |
+| **Serve Live Allure Report** | Double-click [`serve_allure.bat`](../serve_allure.bat) | `allure serve reports/allure-results` |
+| **Re-Generate Static Report** | Double-click [`generate_allure.bat`](../generate_allure.bat) | `allure generate reports/allure-results -o reports/allure-report --clean` |
+| **View Playwright Trace** | N/A | `playwright show-trace reports/traces/<trace-file>.zip` |
+| **View Standalone Pytest HTML** | Open [`reports/report.html`](../reports/report.html) | `python -m pytest --html=reports/report.html` |
+
 

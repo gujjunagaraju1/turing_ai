@@ -1,0 +1,1 @@
+[32mINFO    [0m pages.login_page:login_page.py:60 User logged out successfully and returned to login screen

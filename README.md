@@ -138,23 +138,29 @@ python -m pytest tests/test_e2e.py::TestE2E::test_e2e_send_and_receive_mail_with
 
 ## 📊 Allure Reports & Failure Diagnostics
 
-Allure execution metrics and failure artifacts are generated automatically into `reports/allure-results/`.
+### 1. One-Click Batch Runners (Easiest)
+- **Serve Live Interactive Dashboard:** Double-click [`serve_allure.bat`](./serve_allure.bat)
+- **Generate & View Static Report:** Double-click [`generate_allure.bat`](./generate_allure.bat)
+- **Direct HTML Path:** [`reports/allure-report/index.html`](./reports/allure-report/index.html)
 
+### 2. Command Line Execution
 ```powershell
-# 1. Run test suite to populate Allure results
+# 1. Run test suite (automatically populates reports/allure-results)
 python -m pytest -v
 
 # 2. Open interactive Allure Report in browser
-allure serve reports/allure-results
+.\serve_allure.bat
+# or: tools\allure-2.29.0\bin\allure.bat serve reports/allure-results
 
-# 3. Generate standalone Allure HTML report directory
-allure generate reports/allure-results -o reports/allure-report --clean
+# 3. Generate standalone Allure HTML report
+.\generate_allure.bat
+# or: tools\allure-2.29.0\bin\allure.bat generate reports/allure-results -o reports/allure-report --clean
 
 # 4. View Playwright trace file from a failed test
 playwright show-trace reports/traces/<trace_filename>.zip
 ```
 
-### Automatic Failure Attachments:
+### 3. Automatic Failure Attachments:
 - 📸 **Failure Screenshot:** Full-page PNG automatically captured and attached to the failed test in Allure.
 - 🔍 **Playwright Trace (`.zip`):** Full DOM timeline, network requests, console logs, and action snapshots.
 - 🎥 **Session Video (`.webm`):** Full recording of the browser session leading up to the failure.
