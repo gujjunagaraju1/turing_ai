@@ -12,10 +12,13 @@ __pycache__/
 .pytest_cache/
 *.egg-info/
 
-# ── PLAYWRIGHT ARTIFACTS ────────────────────────────────────────
+# ── PLAYWRIGHT & ALLURE ARTIFACTS ──────────────────────────────
 reports/videos/         # test videos (large files)
 reports/traces/         # trace zip files (large files)
-reports/*.png           # failure screenshots
+reports/screenshots/    # failure screenshots
+reports/allure-results/ # allure raw json results
+reports/allure-report/  # generated allure html report
+tools/                  # local tooling binaries
 
 # ── REPORT HTML (optional — commit if you want to share results)─
 # reports/report.html

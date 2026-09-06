@@ -1,0 +1,5 @@
+[32mINFO    [0m pages.starred_page:starred_page.py:34 Logged in as Receiver
+[32mINFO    [0m pages.starred_page:starred_page.py:43 Copied subject text: 'TC-E2E-01: E2E Mail 1788688233'
+[32mINFO    [0m pages.starred_page:starred_page.py:49 Clicked on star button
+[32mINFO    [0m pages.starred_page:starred_page.py:55 Navigated to Starred section
+[32mINFO    [0m test_starred:test_starred.py:52 TC-STAR-01 PASSED: Copied subject matches first item in Starred section

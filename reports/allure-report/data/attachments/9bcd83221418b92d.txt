@@ -1,0 +1,5 @@
+[32mINFO    [0m pages.compose_page:compose_page.py:30 Compose window opened
+[32mINFO    [0m pages.compose_page:compose_page.py:41 Subject set to: TC-DRAFT-01: Auto-save draft
+[32mINFO    [0m pages.draft_page:draft_page.py:28 Composer closed → draft auto-saved
+[32mINFO    [0m pages.draft_page:draft_page.py:34 Navigated to Drafts folder
+[32mINFO    [0m test_draft:test_draft.py:49 TC-DRAFT-01 PASSED: Draft saved and visible in Drafts folder

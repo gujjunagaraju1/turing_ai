@@ -1,0 +1,2 @@
+Automation QA Assessment Proton Test File Content
+File created for E2E attachment test.

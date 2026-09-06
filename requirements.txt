@@ -15,6 +15,9 @@ pytest-playwright>=0.5
 # Generates standalone HTML test report with screenshots/evidence
 pytest-html>=4.0
 
+# Generates rich Allure test reports with metadata, screenshots, video & trace attachments
+allure-pytest>=2.13.0
+
 # Enables parallel test execution across multiple workers
 # Usage: pytest -n auto
 pytest-xdist>=3.5

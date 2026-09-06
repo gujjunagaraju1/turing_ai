@@ -1,0 +1,8 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Sun Sep 06 15:22:06 IST 2026","Sun Sep 06 15:22:34 IST 2026","28174","tests","test_search","TestSearch","","","TC-SEARCH-01: Search valid keyword and validate subject matches",""
+"passed","Sun Sep 06 15:21:31 IST 2026","Sun Sep 06 15:21:45 IST 2026","14528","tests","test_login","TestLogin","","","TC-LOGIN-01: Valid login with username only",""
+"passed","Sun Sep 06 15:21:48 IST 2026","Sun Sep 06 15:22:03 IST 2026","15404","tests","test_login","TestLogin","","","TC-LOGIN-02: Valid login and clean logout",""
+"passed","Sun Sep 06 15:22:38 IST 2026","Sun Sep 06 15:23:00 IST 2026","21870","tests","test_starred","TestStarred","","","TC-STAR-01: Star email and verify presence in Starred section",""
+"passed","Sun Sep 06 15:19:40 IST 2026","Sun Sep 06 15:20:11 IST 2026","31488","tests","test_compose","TestCompose","","","TC-COMP-01: Send email with all fields filled",""
+"passed","Sun Sep 06 15:20:23 IST 2026","Sun Sep 06 15:20:30 IST 2026","7896","tests","test_draft","TestDraft","","","TC-DRAFT-01: Draft auto-saved on composer close",""
+"passed","Sun Sep 06 15:20:33 IST 2026","Sun Sep 06 15:21:28 IST 2026","55000","tests","test_e2e","TestE2E","","","TC-E2E-01: End-to-end email transmission and verification across accounts",""

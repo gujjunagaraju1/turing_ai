@@ -1,0 +1,8 @@
+"Epic","Feature","Story","FAILED","BROKEN","PASSED","SKIPPED","UNKNOWN"
+"Proton Mail Core","Search & Filter","Keyword Search","0","0","1","0","0"
+"Proton Mail Core","Authentication","User Login","0","0","1","0","0"
+"Proton Mail Core","Authentication","User Session","0","0","1","0","0"
+"Proton Mail Core","Starred Messages","Star Email","0","0","1","0","0"
+"Proton Mail Core","Email Composition","Compose and Send","0","0","1","0","0"
+"Proton Mail Core","Drafts Management","Draft Auto-Save","0","0","1","0","0"
+"Proton Mail Core","End-to-End Workflow","Multi-Account Email Flow","0","0","1","0","0"

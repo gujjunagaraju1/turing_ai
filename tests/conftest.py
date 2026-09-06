@@ -21,6 +21,9 @@ from config.settings import (
     BASE_URL,
     SENDER_PASSWORD,
     SENDER_USERNAME,
+    RECEIVER_USERNAME,
+    RECEIVER_PASSWORD
+    
 )
 from pages.login_page import LoginPage
 
@@ -36,14 +39,30 @@ def open_login_url(page):
 
 
 
+# ── For: Compose / Draft / Sender tests ──────────────────────────
 @pytest.fixture
 def logged_in_page(page):
+    """Logs in as SENDER and returns the authenticated page."""
     page.goto(BASE_URL, timeout=NAV_TIMEOUT)
     page.wait_for_load_state("domcontentloaded")
 
     login = LoginPage(page)
     login.login(SENDER_USERNAME, SENDER_PASSWORD)
-
     page.wait_for_url("**/u/**", timeout=NAV_TIMEOUT)
 
     return page
+
+
+# ── For: Starred / Receiver tests ───────────────────────────────
+@pytest.fixture
+def receiver_logged_in_page(page):
+    """Logs in as RECEIVER and returns the authenticated page."""
+    page.goto(BASE_URL, timeout=NAV_TIMEOUT)
+    page.wait_for_load_state("domcontentloaded")
+
+    login = LoginPage(page)
+    login.login(RECEIVER_USERNAME, RECEIVER_PASSWORD)
+    page.wait_for_url("**/u/**", timeout=NAV_TIMEOUT)
+
+    return page
+

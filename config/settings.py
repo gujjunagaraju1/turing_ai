@@ -122,13 +122,19 @@ CONTEXT_OPTIONS: dict = {
 # DIRECTORIES (auto-creates folders if they don't exist)
 # ═══════════════════════════════════════════════════════════════
 
-REPORTS_DIR = ROOT_DIR / "reports"
-VIDEOS_DIR  = REPORTS_DIR / "videos"
-TRACES_DIR  = REPORTS_DIR / "traces"
-ASSETS_DIR  = ROOT_DIR / "assets" / "attachments"
+REPORTS_DIR        = ROOT_DIR / "reports"
+VIDEOS_DIR         = REPORTS_DIR / "videos"
+TRACES_DIR         = REPORTS_DIR / "traces"
+SCREENSHOTS_DIR    = REPORTS_DIR / "screenshots"
+ALLURE_RESULTS_DIR = REPORTS_DIR / "allure-results"
+ALLURE_REPORT_DIR  = REPORTS_DIR / "allure-report"
+ASSETS_DIR         = ROOT_DIR / "assets" / "attachments"
 
 # Create directories if they don't exist (like mkdir -p)
 VIDEOS_DIR.mkdir(parents=True, exist_ok=True)
 TRACES_DIR.mkdir(parents=True, exist_ok=True)
+SCREENSHOTS_DIR.mkdir(parents=True, exist_ok=True)
+ALLURE_RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+
 
 

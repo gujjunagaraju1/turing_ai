@@ -1,0 +1,3 @@
+@echo off
+echo Serving Live Allure Report...
+"%~dp0tools\allure-2.29.0\bin\allure.bat" serve "%~dp0reports\allure-results"
