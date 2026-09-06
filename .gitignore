@@ -4,6 +4,7 @@
 
 # ── SECRETS (most important!) ────────────────────────────────────
 .env                    # real credentials — NEVER commit
+.env
 
 # ── PYTHON CACHE ────────────────────────────────────────────────
 __pycache__/
