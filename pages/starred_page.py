@@ -1,62 +1,59 @@
 import logging
 from playwright.sync_api import Page
-from config.settings import DEFAULT_TIMEOUT, NAV_TIMEOUT
+from config.settings import (
+    DEFAULT_TIMEOUT,
+    NAV_TIMEOUT,
+    SENDER_USERNAME,
+    SENDER_PASSWORD,
+    RECEIVER_USERNAME,
+    RECEIVER_PASSWORD,
+)
+from pages.login_page import LoginPage
 
 logger = logging.getLogger(__name__)
 
 
 class StarredPage:
+    LOC_STAR_BUTTON = "(//button[@data-testid='item-star-false'])[1]"
+    LOC_SUBJECT_TEXT = "(//span[@data-testid='message-row:subject'])[1]"
+    LOC_STAR_SECTION = "//a[@title='Starred']"
+    LOC_FIRST_TEXT_FROM_STARITEMS = "(//div[@data-shortcut-target='item-container'])[1]//span[@data-testid='message-row:subject']"
 
-    # ── LOCATORS ─────────────────────────────────────────────────
-    LOC_INBOX_LINK             = "//a[@title='Inbox']"
-    LOC_STARRED_LINK           = "//a[@title='Starred']"
-    LOC_STAR_BUTTON            = "(//div[@data-shortcut-target='item-container'])[1]//button[@data-testid='message-row:star-button']"
-    LOC_STARRED_ITEMS          = "//div[@data-shortcut-target='item-container']"
-    LOC_FIRST_STARRED          = "(//div[@data-shortcut-target='item-container'])[1]"
-    LOC_FIRST_STARRED_SUBJECT  = "(//div[@data-shortcut-target='item-container'])[1]//span[@data-testid='message-row:subject']"
+    def __init__(self, page: Page, flag: bool = True):
+        self.page = page
+        self.flag = flag
+        self.star_btn = page.locator(self.LOC_STAR_BUTTON)
+        self.subject_text = page.locator(self.LOC_SUBJECT_TEXT)
+        self.star_section = page.locator(self.LOC_STAR_SECTION)
+        self.first_text_from_staritems = page.locator(self.LOC_FIRST_TEXT_FROM_STARITEMS)
 
-    # ── CONSTRUCTOR ──────────────────────────────────────────────
-    def __init__(self, page: Page):
-        self.page                 = page
-        self.inbox_link           = page.locator(self.LOC_INBOX_LINK)
-        self.starred_link         = page.locator(self.LOC_STARRED_LINK)
-        self.star_btn             = page.locator(self.LOC_STAR_BUTTON)
-        self.starred_items        = page.locator(self.LOC_STARRED_ITEMS)
-        self.first_starred        = page.locator(self.LOC_FIRST_STARRED)
-        self.first_starred_subject= page.locator(self.LOC_FIRST_STARRED_SUBJECT)
+        login = LoginPage(page)
+        if not flag:
+            login.login(RECEIVER_USERNAME, RECEIVER_PASSWORD)
+            page.wait_for_url("**/u/**", timeout=NAV_TIMEOUT)
+            logger.info("Logged in as Receiver")
+        else:
+            login.login(SENDER_USERNAME, SENDER_PASSWORD)
+            page.wait_for_url("**/u/**", timeout=NAV_TIMEOUT)
+            logger.info("Logged in as Sender")
 
-    # ── ACTIONS ──────────────────────────────────────────────────
-    def go_to_inbox(self):
-        """Navigate to Inbox folder."""
-        self.inbox_link.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
-        self.inbox_link.click()
-        self.page.wait_for_load_state("domcontentloaded")
-        logger.info("Navigated to Inbox")
+    def get_subject_text(self) -> str:
+        self.subject_text.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+        subject = (self.subject_text.text_content() or "").strip()
+        logger.info(f"Copied subject text: '{subject}'")
+        return subject
 
-    def go_to_starred(self):
-        """Navigate to Starred folder."""
-        self.starred_link.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
-        self.starred_link.click()
-        self.page.wait_for_load_state("domcontentloaded")
-        logger.info("Navigated to Starred folder")
-
-    def star_first_email(self):
-        """Click the star button on the first email."""
+    def click_star(self):
         self.star_btn.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
         self.star_btn.click()
-        logger.info("Clicked star on the first email")
+        logger.info("Clicked on star button")
 
-    def unstar_first_email(self):
-        """Click the star button again to unstar the first email."""
-        self.star_btn.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
-        self.star_btn.click()
-        logger.info("Unstarred the first email")
+    def go_to_starred_section(self):
+        self.star_section.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+        self.star_section.click()
+        self.page.wait_for_load_state("domcontentloaded")
+        logger.info("Navigated to Starred section")
 
-    def get_starred_count(self) -> int:
-        """Return total visible items in the current view."""
-        return self.starred_items.count()
-
-    def get_first_starred_subject(self) -> str:
-        """Return the subject text of the first item in the list."""
-        self.first_starred_subject.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
-        return (self.first_starred_subject.text_content() or "").strip()
+    def get_first_text_from_staritems(self) -> str:
+        self.first_text_from_staritems.wait_for(state="visible", timeout=DEFAULT_TIMEOUT)
+        return (self.first_text_from_staritems.text_content() or "").strip()

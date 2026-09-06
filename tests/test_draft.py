@@ -1,4 +1,6 @@
 import logging
+import allure
+import pytest
 from playwright.sync_api import Page, expect
 
 from pages.compose_page import ComposePage
@@ -8,11 +10,20 @@ from config.settings import NAV_TIMEOUT
 logger = logging.getLogger(__name__)
 
 
+@allure.feature("Drafts Management")
+@allure.epic("Proton Mail Core")
+@pytest.mark.drafts
 class TestDraft:
 
     # ─────────────────────────────────────────────────────────────
     # TC-DRAFT-01 [POSITIVE] — Draft saved after closing composer
     # ─────────────────────────────────────────────────────────────
+    @allure.story("Draft Auto-Save")
+    @allure.title("TC-DRAFT-01: Draft auto-saved on composer close")
+    @allure.severity(allure.severity_level.CRITICAL)
+    @pytest.mark.sanity
+    @pytest.mark.regression
+    @pytest.mark.smoke
     def test_draft_is_saved_after_close(self, logged_in_page):
         SUBJECT = "TC-DRAFT-01: Auto-save draft"
 
@@ -40,6 +51,10 @@ class TestDraft:
     # ─────────────────────────────────────────────────────────────
     # TC-DRAFT-02 [POSITIVE] — Draft subject persists after saving
     # ─────────────────────────────────────────────────────────────
+    @allure.story("Draft Persistence")
+    @allure.title("TC-DRAFT-02: Draft subject persists across folder view")
+    @allure.severity(allure.severity_level.NORMAL)
+    @pytest.mark.regression
     def test_draft_subject_persists(self, logged_in_page):
         logged_in_page.wait_for_timeout(3000)
         SUBJECT = "TC-DRAFT-02: Subject persistence check"

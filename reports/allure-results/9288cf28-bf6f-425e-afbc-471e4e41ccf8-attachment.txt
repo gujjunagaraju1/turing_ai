@@ -1,0 +1,7 @@
+[32mINFO    [0m pages.compose_page:compose_page.py:30 Compose window opened
+[32mINFO    [0m pages.compose_page:compose_page.py:36 Recipient set to: gujjunagaraju5@protonmail.com
+[32mINFO    [0m pages.compose_page:compose_page.py:41 Subject set to: TC-01: Full compose test
+[32mINFO    [0m pages.compose_page:compose_page.py:57 Message body filled
+[32mINFO    [0m pages.compose_page:compose_page.py:62 Send button clicked
+[32mINFO    [0m pages.compose_page:compose_page.py:90 Email composed and sent to gujjunagaraju5@protonmail.com
+[32mINFO    [0m test_compose:test_compose.py:31 TC-01 PASSED: Email sent successfully

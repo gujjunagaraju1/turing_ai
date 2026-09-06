@@ -1,0 +1,6 @@
+[32mINFO    [0m pages.search_page:search_page.py:40 Logged in as Receiver
+[32mINFO    [0m pages.search_page:search_page.py:51 Entered search keyword: 'test'
+[32mINFO    [0m pages.search_page:search_page.py:73 Submitted search
+[32mINFO    [0m pages.search_page:search_page.py:57 Filled search input with keyword: 'test' and submitted
+[32mINFO    [0m pages.search_page:search_page.py:98 First search result subject: 'InboxTC-01: Full compose test'
+[32mINFO    [0m test_search:test_search.py:42 TC-SEARCH-01 PASSED: Search result subject contains expected keyword
