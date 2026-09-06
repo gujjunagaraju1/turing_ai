@@ -1,0 +1,32 @@
+# ═══════════════════════════════════════════════════════════════
+# .gitignore — Files That Should NEVER Go to GitHub
+# ═══════════════════════════════════════════════════════════════
+
+# ── SECRETS (most important!) ────────────────────────────────────
+.env                    # real credentials — NEVER commit
+
+# ── PYTHON CACHE ────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+*.egg-info/
+
+# ── PLAYWRIGHT ARTIFACTS ────────────────────────────────────────
+reports/videos/         # test videos (large files)
+reports/traces/         # trace zip files (large files)
+reports/*.png           # failure screenshots
+
+# ── REPORT HTML (optional — commit if you want to share results)─
+# reports/report.html
+
+# ── VIRTUAL ENVIRONMENT ─────────────────────────────────────────
+venv/
+.venv/
+env/
+
+# ── IDE / OS FILES ──────────────────────────────────────────────
+.idea/
+.vscode/
+*.DS_Store
+Thumbs.db

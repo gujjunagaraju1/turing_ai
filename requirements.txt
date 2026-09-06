@@ -1,0 +1,28 @@
+# ─────────────────────────────────────────────────────────────
+# Proton Mail QA Assessment — Python Dependencies
+# ─────────────────────────────────────────────────────────────
+
+# Core browser automation engine (Chromium / Firefox / WebKit)
+playwright>=1.44
+
+# Test runner — discovers and executes all tests in tests/
+pytest>=8.0
+
+# Official Playwright plugin for pytest
+# Provides ready-made fixtures: page, browser, browser_context
+pytest-playwright>=0.5
+
+# Generates standalone HTML test report with screenshots/evidence
+pytest-html>=4.0
+
+# Enables parallel test execution across multiple workers
+# Usage: pytest -n auto
+pytest-xdist>=3.5
+
+# Loads .env file for secure credential management
+# Keeps passwords out of source code
+python-dotenv>=1.0
+
+# Controlled retry for genuinely flaky scenarios only
+# Assessment note: use carefully — do not mask real defects
+pytest-retry>=0.6
