@@ -37,43 +37,20 @@ load_dotenv(dotenv_path=ENV_FILE, override=True)
 # ═══════════════════════════════════════════════════════════════
 # ACCOUNT CREDENTIALS
 # ═══════════════════════════════════════════════════════════════
+# Accepts username-only (e.g. gujjunagaraju) or full email from .env.
+# Appends @proton.me if no @ present; extracts username from full email.
 
-def _normalize_email(value: str) -> str:
-    """
-    Accepts BOTH formats from .env:
-      - Username only:  gujjunagaraju         → gujjunagaraju@proton.me
-      - Full email:     gujjunagaraju@proton.me → gujjunagaraju@proton.me
+_raw_sender   = os.getenv("SENDER_EMAIL", "").strip()
+_raw_receiver = os.getenv("RECEIVER_EMAIL", "").strip()
 
-    Also extracts username part for login form (Proton uses username, not full email).
-    """
-    value = value.strip()
-    if value and "@" not in value:
-        return f"{value}@proton.me"   # append domain automatically
-    return value
-
-
-def _extract_username(email: str) -> str:
-    """
-    Extracts just the username part from a full email address.
-    gujjunagaraju@proton.me  →  gujjunagaraju
-    Used for Proton Mail login form which accepts username OR full email.
-    """
-    return email.split("@")[0] if "@" in email else email
-
-
-# ── Raw values from .env ─────────────────────────────────────────
-_raw_sender   = os.getenv("SENDER_EMAIL", "")
-_raw_receiver = os.getenv("RECEIVER_EMAIL", "")
-
-# ── Normalized: always full email format ─────────────────────────
 # Sender account — Account 1 (sends email in 2-account tests)
-SENDER_EMAIL: str    = _normalize_email(_raw_sender)      # full email
-SENDER_USERNAME: str = _extract_username(SENDER_EMAIL)    # username only
+SENDER_EMAIL: str    = _raw_sender if "@" in _raw_sender else f"{_raw_sender}@proton.me"
+SENDER_USERNAME: str = SENDER_EMAIL.split("@")[0]
 SENDER_PASSWORD: str = os.getenv("SENDER_PASSWORD", "")
 
 # Receiver account — Account 2 (receives email in 2-account tests)
-RECEIVER_EMAIL: str    = _normalize_email(_raw_receiver)    # full email
-RECEIVER_USERNAME: str = _extract_username(RECEIVER_EMAIL)  # username only
+RECEIVER_EMAIL: str    = _raw_receiver if "@" in _raw_receiver else f"{_raw_receiver}@proton.me"
+RECEIVER_USERNAME: str = RECEIVER_EMAIL.split("@")[0]
 RECEIVER_PASSWORD: str = os.getenv("RECEIVER_PASSWORD", "")
 
 
@@ -134,7 +111,7 @@ LAUNCH_OPTIONS: dict = {
 
 # Browser context options (viewport, locale, timezone)
 CONTEXT_OPTIONS: dict = {
-    "viewport": {"width": 1440, "height": 900},  # standard desktop resolution
+    "viewport": None,# expanded so compose window is never clipped
     "locale": "en-US",
     "timezone_id": "Asia/Kolkata",
     "accept_downloads": True,                     # needed for attachment download tests
@@ -155,28 +132,3 @@ VIDEOS_DIR.mkdir(parents=True, exist_ok=True)
 TRACES_DIR.mkdir(parents=True, exist_ok=True)
 
 
-# ═══════════════════════════════════════════════════════════════
-# VALIDATION — Warn if credentials are missing
-# ═══════════════════════════════════════════════════════════════
-
-def validate_config() -> None:
-    """
-    Call this at the start of a test session to catch missing credentials early.
-    Like a @BeforeSuite validation in TestNG.
-    """
-    missing = []
-    if not SENDER_EMAIL:
-        missing.append("SENDER_EMAIL")
-    if not SENDER_PASSWORD:
-        missing.append("SENDER_PASSWORD")
-    if not RECEIVER_EMAIL:
-        missing.append("RECEIVER_EMAIL")
-    if not RECEIVER_PASSWORD:
-        missing.append("RECEIVER_PASSWORD")
-
-    if missing:
-        raise EnvironmentError(
-            f"\n[CONFIG ERROR] Missing required environment variables: {missing}"
-            f"\nPlease fill in your credentials in the .env file."
-            f"\nSee .env.example for the required format."
-        )
